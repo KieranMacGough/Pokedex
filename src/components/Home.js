@@ -3,32 +3,20 @@ import '../styles/App.css';
 import IconSearch from '../images/vectors/icons/Search.svg';
 import Pokedex from 'pokedex-promise-v2';
 import HomePokeCard from "./HomePokeCard";
-import HomeGeneration from './HomeGeneration';
+import HomeOptions from './HomeOptions';
 
 import generation from '../images/vectors/icons/Generation.svg';
 import sort from '../images/vectors/icons/Sort.svg';
 import filter from '../images/vectors/icons/Filter.svg';
 
 const Home = () => {
-    const [showGeneration, setGeneration] = useState(false)
-    const [showFilter, setFilter] = useState(false)
-    const [showSort, setSort] = useState(false)
-
     const P = new Pokedex();
     const [searchTerm, setSearchTerm] = useState('');
     const [fullPokemonList, setFullPokemonList] = useState('');
     const [displayedPokemonList, setDisplayedPokemonList] = useState('');
 
-    function imageClick(img) {
-        console.log(img+" clicked")
-            switch(img) {
-                case 'Generation':
-                    setFilter(false);
-                    setSort(false);
-                    setGeneration(true);
-               
-              }
-        }
+    const [homeOptions, setHomeOptions] = useState('');
+
     // const handleKeyDown = (event) => {
     //     if (event.key === 'Enter') {
     //         searchPokemon(searchTerm)
@@ -98,39 +86,44 @@ const Home = () => {
     //         console.log(searchedPokemonList);
     //     }
     // }, [searchTerm]);
-
-    
+   
 
     return (
+        <>
         <div className="Home">
             <div className="HomeNav">
-                <img className="nav--generation" src={generation} alt="generation" onClick={imageClick(`HomeGeneration`)} />
-                <img className="nav--sort" src={sort} alt="sort"/>
-                <img className="nav--filter" src={filter} alt="filter"/>
+                <div>
+                    <img className="nav--generation" src={generation} alt="generation" onClick={() => setHomeOptions('generation')} />
+                    <img className="nav--sort" src={sort} alt="sort" onClick={() => setHomeOptions('sort')} />
+                    <img className="nav--filter" src={filter} alt="filter" onClick={() => setHomeOptions('filter')} />
+                </div>
             </div>
-            <div className="title">
-                <p className="title--text">Pokédex</p>
-                <p className="title--description">Search for Pokémon by name or using the National Pokédex number.</p>
-            </div>
+            <div>
+                <div className="title">
+                    <p className="title--text">Pokédex</p>
+                    <p className="title--description">Search for Pokémon by name or using the National Pokédex number.</p>
+                </div>
 
-            <div className="search">
-                    <img className="search--icon" src={IconSearch} alt="Search" />
-                    <input
-                        className="search--input"
-                        placeholder="What Pokémon are you looking for?"
-                        type="text"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-            </div>
+                <div className="search">
+                        <img className="search--icon" src={IconSearch} alt="Search" />
+                        <input
+                            className="search--input"
+                            placeholder="What Pokémon are you looking for?"
+                            type="text"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                </div>
 
-            <div className="monlist">
-                {displayedPokemonList} 
-            </div> 
-            <div className="sortFilterGeneration">
-                <HomeGeneration />
+                <div className="monlist">
+                    {displayedPokemonList} 
+                </div> 
             </div>
         </div>
+        <div className="options">
+            <HomeOptions option={homeOptions} />
+        </div>
+        </>
     )
 }
 
