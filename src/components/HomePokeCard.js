@@ -61,7 +61,7 @@ export default function HomePokeCard(props) {
             
         </div>
         }
-        {pokemon === "" && <p></p>}
+        {pokemon === "" && ''}
     </div>
     )
 }

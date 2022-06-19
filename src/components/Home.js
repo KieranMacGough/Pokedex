@@ -1,21 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/App.css';
-import Pokemon from './Pokemon';
 import IconSearch from '../images/vectors/icons/Search.svg';
 import Pokedex from 'pokedex-promise-v2';
+import HomePokeCard from "./HomePokeCard";
+import HomeGeneration from './HomeGeneration';
+
 import generation from '../images/vectors/icons/Generation.svg';
 import sort from '../images/vectors/icons/Sort.svg';
 import filter from '../images/vectors/icons/Filter.svg';
-import HomePokeCard from "./HomePokeCard.js";
 
 const Home = () => {
+    const [showGeneration, setGeneration] = useState(false)
+    const [showFilter, setFilter] = useState(false)
+    const [showSort, setSort] = useState(false)
+
     const P = new Pokedex();
-    const [pokemon, setPokemon] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [fullPokemonList, setFullPokemonList] = useState('');
     const [displayedPokemonList, setDisplayedPokemonList] = useState('');
-    let monElements = '';
 
+    function imageClick(img) {
+        console.log(img+" clicked")
+            switch(img) {
+                case 'Generation':
+                    setFilter(false);
+                    setSort(false);
+                    setGeneration(true);
+               
+              }
+        }
     // const handleKeyDown = (event) => {
     //     if (event.key === 'Enter') {
     //         searchPokemon(searchTerm)
@@ -34,7 +47,7 @@ const Home = () => {
     // }
     
     const interval = {
-        limit: 10,
+        limit: 1,
         offset: 0
     }
 
@@ -90,12 +103,11 @@ const Home = () => {
 
     return (
         <div className="Home">
-            <div className="nav">
-                <img className="nav--generation" src={generation} alt="generation"/>
+            <div className="HomeNav">
+                <img className="nav--generation" src={generation} alt="generation" onClick={imageClick(`HomeGeneration`)} />
                 <img className="nav--sort" src={sort} alt="sort"/>
                 <img className="nav--filter" src={filter} alt="filter"/>
             </div>
-
             <div className="title">
                 <p className="title--text">Pokédex</p>
                 <p className="title--description">Search for Pokémon by name or using the National Pokédex number.</p>
@@ -115,6 +127,9 @@ const Home = () => {
             <div className="monlist">
                 {displayedPokemonList} 
             </div> 
+            <div className="sortFilterGeneration">
+                <HomeGeneration />
+            </div>
         </div>
     )
 }
